@@ -34,4 +34,27 @@ public class RandomKeyUtil {
 
         return result;
     }
+
+    public static int[] generateRandomNumberKeysSwap(int count) {
+
+        int[] result = new int[count];
+
+        for (int i = 0; i < count; i++) {
+            result[i] = i;
+        }
+
+        Random random = new Random();
+
+        for (int i = 0; i < count; i++) {
+            int randomNumber1 = random.nextInt(count);
+            int randomNumber2 = random.nextInt(count);
+
+            int temp = result[randomNumber2];
+
+            result[randomNumber2] = result[randomNumber1];
+            result[randomNumber1] = temp;
+        }
+
+        return result;
+    }
 }
