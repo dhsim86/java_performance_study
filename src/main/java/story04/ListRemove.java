@@ -1,4 +1,4 @@
-package Story04;
+package story04;
 
 import org.openjdk.jmh.annotations.*;
 

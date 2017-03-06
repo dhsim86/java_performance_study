@@ -1,4 +1,4 @@
-package Story04;
+package story04;
 
 import java.util.Iterator;
 import java.util.Random;

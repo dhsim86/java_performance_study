@@ -1,11 +1,8 @@
-package Story04;
+package story04;
 
 import org.openjdk.jmh.annotations.*;
 
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode({Mode.AverageTime})
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
 @Fork(1)
-public class SetContains {
+public class SetIterate {
 
     int LOOP_COUNT = 1000;
 
@@ -23,8 +20,10 @@ public class SetContains {
     Set<String> treeSet;
     Set<String> linkedHashSet;
 
-    String data = "abcdedfghijklmnopqrstuvwxyz";
+    String data = "abcdefghijklmnopqrstuvwxyz";
     String[] keys;
+
+    String result = null;
 
     @Setup(Level.Trial)
     public void setUp() {
@@ -40,33 +39,35 @@ public class SetContains {
             treeSet.add(tempData);
             linkedHashSet.add(tempData);
         }
+    }
 
-        if (keys == null || keys.length != LOOP_COUNT) {
-            keys = RandomKeyUtil.generateRandomSetKeysSwap(hashSet);
+    @Benchmark
+    public void iterateHashSet() {
+
+        Iterator<String> iter = hashSet.iterator();
+
+        while(iter.hasNext()) {
+            result = iter.next();
         }
     }
 
     @Benchmark
-    public void containsHashSet() {
+    public void iterateTreeSet() {
 
-        for (String key : keys) {
-            hashSet.contains(key);
+        Iterator<String> iter = treeSet.iterator();
+
+        while(iter.hasNext()) {
+            result = iter.next();
         }
     }
 
     @Benchmark
-    public void containsTreeSet() {
+    public void iterateLinkedHashSet() {
 
-        for (String key : keys) {
-            treeSet.contains(key);
-        }
-    }
+        Iterator<String> iter = linkedHashSet.iterator();
 
-    @Benchmark
-    public void containsLinkedHashSet() {
-
-        for (String key : keys) {
-            linkedHashSet.contains(key);
+        while(iter.hasNext()) {
+            result = iter.next();
         }
     }
 }
